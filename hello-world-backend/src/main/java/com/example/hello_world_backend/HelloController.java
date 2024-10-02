@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,29 +13,23 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:4200")
 public class HelloController {
 
-    private Map<String, Double> exchangeRates;
-
-    public HelloController() {
-        exchangeRates = new HashMap<>();
-        // Static exchange rates for demo purposes (replace with real API data)
-        exchangeRates.put("USD-EUR", 0.94);
-        exchangeRates.put("EUR-USD", 1.06);
-        exchangeRates.put("USD-GBP", 0.76);
-        exchangeRates.put("GBP-USD", 1.31);
-        exchangeRates.put("USD-JPY", 144.31);
-        exchangeRates.put("JPY-USD", 0.0069);
-        // Add more rates as needed
-    }
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/api/convert")
     public double convertCurrency(
-        @RequestParam double amount, 
-        @RequestParam String from, 
-        @RequestParam String to) {
+            @RequestParam double amount,
+            @RequestParam String from,
+            @RequestParam String to) {
+
+        // Fetch exchange rates from the API
+        String url = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/" + from.toLowerCase() + ".json";
+        Map<String, Map<String, Double>> response = restTemplate.getForObject(url, Map.class);
+                
+        // Extract the exchange rate for the target currency
+        Map<String, Double> rates = response.get(from.toLowerCase());
+        double rate = rates.get(to.toLowerCase());
         
-        String key = from + "-" + to;
-        double rate = exchangeRates.getOrDefault(key, 1.0);
-        
+        // Return the converted amount
         return amount * rate;
     }
 }

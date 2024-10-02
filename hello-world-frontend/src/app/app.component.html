@@ -1,19 +1,9 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
 <div style="text-align: center;">
   <h1>Currency Exchange Calculator</h1>
 
-  <form (ngSubmit)="convertCurrency()">
     <div>
       <label for="amount">Amount:</label>
-      <input id="amount" type="number" [(ngModel)]="amount" name="amount" required>
+      <input id="amount" type="number" [(ngModel)]="amount" (input)="convertCurrency()" name="amount" required>
     </div>
     
     <div>
@@ -23,7 +13,6 @@
         <option value="EUR">EUR</option>
         <option value="GBP">GBP</option>
         <option value="JPY">JPY</option>
-        <!-- Add more currencies as needed -->
       </select>
     </div>
 
@@ -34,12 +23,9 @@
         <option value="EUR">EUR</option>
         <option value="GBP">GBP</option>
         <option value="JPY">JPY</option>
-        <!-- Add more currencies as needed -->
       </select>
     </div>
 
-    <button type="submit">Convert</button>
-  </form>
 
   <div *ngIf="convertedAmount !== null">
     <p>{{ amount }} {{ fromCurrency }} is equal to {{ convertedAmount }} {{ toCurrency }}</p>

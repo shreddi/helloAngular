@@ -21,7 +21,6 @@ export class AppComponent{
   constructor(private helloService: HelloService) { } //injects an instance of helloService into the component.
  
   convertCurrency() {
-    console.log("wow")
     this.helloService.convertCurrency(this.amount, this.fromCurrency, this.toCurrency)
       .subscribe((result: number) => {
         this.convertedAmount = result;
