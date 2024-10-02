@@ -1,13 +1,15 @@
-<div style="text-align: center;">
-  <h1>Currency Exchange Calculator</h1>
+<div style="text-align: center;"> <!-- centers all content within this div-->
+  <h1>Currency Exchange Calculator</h1> 
 
-    <div>
+    <div> 
       <label for="amount">Amount:</label>
-      <input id="amount" type="number" [(ngModel)]="amount" (input)="convertCurrency()" name="amount" required>
+      <!-- [(ngModel)]="amount" sets app.component's amount variable to this input, and (input)="convertCurrency() makes it so convertCurrency() is ran when the input is changed." -->
+      <input id="amount" type="number" [(ngModel)]="amount" (input)="convertCurrency()" name="amount" required> 
     </div>
     
     <div>
       <label for="fromCurrency">From:</label>
+      <!-- [(ngModel)]="amount" sets app.component's fromCurrency variable to this input, and (change)="convertCurrency() makes it so convertCurrency() is ran when the selection is changed." -->
       <select id="fromCurrency" [(ngModel)]="fromCurrency" (change)="convertCurrency()" name="fromCurrency" required>
         <option value="AUD">AUD - Australian Dollar</option>
         <option value="CAD">CAD - Canadian Dollar</option>
@@ -33,6 +35,7 @@
 
     <div>
       <label for="toCurrency">To:</label>
+      <!-- [(ngModel)]="amount" sets app.component's toCurrency variable to this input, and (change)="convertCurrency() makes it so convertCurrency() is ran when the selection is changed." -->
       <select id="toCurrency" [(ngModel)]="toCurrency" (change)="convertCurrency()" name="toCurrency" required>
         <option value="AUD">AUD - Australian Dollar</option>
         <option value="CAD">CAD - Canadian Dollar</option>
@@ -57,7 +60,8 @@
     </div>
 
 
-  <div *ngIf="convertedAmount !== null">
+      
+  <div *ngIf="convertedAmount !== null"> <!-- If convertedAmount exists, this block will show.-->
     <p>{{ amount }} {{ fromCurrency }} is equal to {{ convertedAmount }} {{ toCurrency }}</p>
   </div>
 </div>

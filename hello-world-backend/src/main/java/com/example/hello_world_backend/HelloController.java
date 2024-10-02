@@ -5,31 +5,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.HashMap;
 import java.util.Map;
 
-@RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@RestController //Tells spring boot that this class handles HTTP requests and returns a JSON response
+@CrossOrigin(origins = "http://localhost:4200") 
 public class HelloController {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate = new RestTemplate(); //a HTTP client to fetch rates from currency API.
 
-    @GetMapping("/api/convert")
-    public double convertCurrency(
-            @RequestParam double amount,
-            @RequestParam String from,
-            @RequestParam String to) {
+    @GetMapping("/api/convert") //define a get endpoint at /api/convert
+    public double convertCurrency( //method executed when the endpoint is hit.
+            //query parameters to expect in URL for endpoint.
+            @RequestParam double amount, //float amount to be converted.
+            @RequestParam String from, //string code of base currency (ex: USD)
+            @RequestParam String to) //string code of target currency (ex: EUR)
+            {
 
-        // Fetch exchange rates from the API
-        String url = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/" + from.toLowerCase() + ".json";
-        Map<String, Map<String, Double>> response = restTemplate.getForObject(url, Map.class);
+        //fetch exchange rates from API
+        String url = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/" + from.toLowerCase() + ".json"; //construct url for api to fetch exchange rates, using base currency code.
+        Map<String, Map<String, Double>> response = restTemplate.getForObject(url, Map.class); //make request, and set response variable to it.
                 
-        // Extract the exchange rate for the target currency
-        Map<String, Double> rates = response.get(from.toLowerCase());
-        double rate = rates.get(to.toLowerCase());
+
+        Map<String, Double> rates = response.get(from.toLowerCase()); //set rates variable to given rates for base currency
+        double rate = rates.get(to.toLowerCase()); //find conversion for target currency
         
-        // Return the converted amount
+        //return amount with correct conversion.
         return amount * rate;
     }
 }
