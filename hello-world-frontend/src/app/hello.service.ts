@@ -9,7 +9,7 @@ export class HelloService {
 
   constructor(private http: HttpClient) { }
 
-  getHello(): Observable<string> {
-    return this.http.get('http://localhost:8080/api/hello', { responseType: 'text' });
+  convertCurrency(amount: number, fromCurrency: string, toCurrency: string): Observable<number> {
+    return this.http.get<number>(`http://localhost:8080/api/convert?amount=${amount}&from=${fromCurrency}&to=${toCurrency}`);
   }
 }

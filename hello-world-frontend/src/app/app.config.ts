@@ -7,6 +7,7 @@ export const appConfig: ApplicationConfig = { //exports an appConfig that is the
   providers:[
     provideZoneChangeDetection({ eventCoalescing: true }),  //Zone.js detects and responds to UI changes, and eventCoalescing combines multiple events that happen in a short span of time together.
     provideRouter(routes), //sets up router, responsible for navigation and URL changes
-    provideHttpClient(),] //enables HTTP requests
+    provideHttpClient(),
+  ] //enables HTTP requests
 };
 
